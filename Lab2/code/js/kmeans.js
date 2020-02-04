@@ -35,19 +35,24 @@ function kmeans(data, k) {
         //Task 4.4 - Do a quality check for current result
         qualitycheck = qualityCheck(centroid,new_array,clusterIndexPerPoint);
         
+        console.log("Old Quality check: " + oldqualitycheck);
         console.log("Quality check: " + qualitycheck);
+        iterations++; 
+        console.log("iterations: " + iterations);
         //End the loop if...
-        if( oldqualitycheck - qualitycheck < 0.0000001 )
+        if(Math.abs(oldqualitycheck - qualitycheck) < Math.pow(10, -16) )
         {
             converge = true;
         }
 
     }
     while (converge == false)
+    
     //Return results
     return {
         assignments: clusterIndexPerPoint
     };
+
 
 }
 
@@ -211,7 +216,10 @@ function qualityCheck(centroid, new_array, clusterIndexPerPoint){
     for (var i = 0; i < centroid.length; i++) {
         for (var j = 0; j < new_array.length; j++) {
             if (clusterIndexPerPoint[j] == i) { 
-                qualitycheck += Math.pow(euclideanDistance(new_array[j], centroid[i]), 2.0);
+                for(var k = 0; k < centroid[0].length; ++k) {
+                    qualitycheck = Math.pow(euclideanDistance(new_array[j], centroid[i]), 2.0);
+                    
+                }
             }
         }
     }
